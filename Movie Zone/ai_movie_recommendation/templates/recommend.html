@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🎥 AI Movie Recommender | Movie Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+    --bg: #0e0e0e;
+    --card-bg: rgba(30, 30, 30, 0.6);
+    --accent: #ff8c00;
+    --primary: #00ffe7;
+    --white: #fefefe;
+    --glass: rgba(255, 255, 255, 0.08);
+    --input-bg: rgba(255, 255, 255, 0.1);
+    --input-border: #00ffe79f;
+  }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 30px 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      background-image: radial-gradient(circle at top left, #222 0%, #000 100%);
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      font-size: 2.2rem;
+      margin-bottom: 40px;
+    }
+
+    .section {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--glass);
+      padding: 30px;
+      border-radius: 16px;
+      margin: 0 auto 40px;
+      max-width: 720px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+    }
+
+    h3 {
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 5px;
+      font-weight: 600;
+    }
+
+    select,
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background: var(--input-bg);
+    color: var(--white);
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    appearance: none; /* Removes default arrow in most browsers */
+    background-image: linear-gradient(45deg, transparent 50%, var(--primary) 50%),
+                      linear-gradient(135deg, var(--primary) 50%, transparent 50%);
+    background-position: calc(100% - 20px) center, calc(100% - 15px) center;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 36px;
+  }
+   select:hover,
+  input:hover,
+  textarea:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  select:focus,
+  input:focus,
+  textarea:focus {
+    border-color: var(--input-border);
+    background-color: rgba(255, 255, 255, 0.18);
+  }
+
+  option {
+    background: #1a1a1a;
+    color: var(--white);
+  }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+button,
+  select,
+  input,
+  textarea {
+    transition: 0.3s ease;
+  }
+    button {
+      background: var(--primary);
+      color: #000;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 1rem;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    button:hover {
+      background: #00e6d2;
+      box-shadow: 0 0 20px var(--primary), 0 0 40px #00cbb8;
+      transform: scale(1.03);
+    }
+
+    .chat-output {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-left: 4px solid var(--accent);
+      padding: 18px;
+      border-radius: 10px;
+      margin-top: 20px;
+      color: var(--primary);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .clear-btn {
+      background-color: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      margin-top: 14px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      float: right;
+    }
+
+    .clear-btn:hover {
+      background-color: var(--accent);
+      color: #000;
+      transform: scale(1.03);
+    }
+
+    @media (max-width: 768px) {
+      h2 {
+        font-size: 1.8rem;
+      }
+      .section {
+        padding: 20px;
+      }
+      button {
+        width: 100%;
+      }
+    }
+    .back-btn {
+  display: inline-block;
+  background-color: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 0 10px var(--primary);
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: var(--primary);
+  color: #000;
+  box-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary);
+  transform: scale(1.05);
+}
+
+  </style>
+</head>
+<body>
+  <h2>🎬 AI-Based Movie Recommendation</h2>
+
+  <!-- 🔸 Form-Based Recommendation -->
+  <div class="section">
+    <h3>📋 Based on Your Preferences</h3>
+    <form action="/recommend_form" method="POST">
+      <label>Genre:</label>
+      <select name="genre" required>
+        <option value="Action">Action</option>
+        <option value="Comedy">Comedy</option>
+        <option value="Drama">Drama</option>
+        <option value="Horror">Horror</option>
+        <option value="Romance">Romance</option>
+        <option value="Sci-Fi">Sci-Fi</option>
+        <option value="Thriller">Thriller</option>
+        <option value="Fantasy">Fantasy</option>
+        <option value="Documentary">Documentary</option>
+        <option value="Animation">Animation</option>
+      </select>
+
+      <label>Release Type:</label>
+      <select name="release_type" required>
+        <option value="Latest">Latest</option>
+        <option value="Classic">Classic</option>
+      </select>
+
+      <label>Mood:</label>
+      <select name="mood" required>
+        <option value="Exciting">Exciting</option>
+        <option value="Emotional">Emotional</option>
+        <option value="Feel Good">Feel Good</option>
+        <option value="Suspenseful">Suspenseful</option>
+        <option value="Romantic">Romantic</option>
+        <option value="Scary">Scary</option>
+      </select>
+
+      <label>Movie Industry:</label>
+      <select name="industry" required>
+        <option value="Hollywood">Hollywood</option>
+        <option value="Bollywood">Bollywood</option>
+        <option value="Korean">Korean</option>
+        <option value="Japanese">Japanese</option>
+        <option value="Any">Any</option>
+      </select>
+
+      <label>Preferred Year Range:</label>
+      <select name="year_range" required>
+        <option value="2020s">2020s</option>
+        <option value="2010s">2010–2019</option>
+        <option value="2000s">2000–2009</option>
+        <option value="90s">1990–1999</option>
+        <option value="80s">1980–1989</option>
+        <option value="Any">Any</option>
+      </select>
+
+      <label>Language (optional):</label>
+      <input type="text" name="language" placeholder="e.g. English, Hindi">
+
+      <button type="submit">🎯 Recommend Me Movies</button>
+    </form>
+
+    {% if form_reply %}
+    <div class="chat-output" id="form-result">
+      {{ form_reply }}
+      <br>
+      <button class="clear-btn" onclick="document.getElementById('form-result').style.display='none'">🧹 Clear</button>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- 🔹 Chatbot-Based Recommendation -->
+  <div class="section">
+    <h3>🤖 Ask AI Directly</h3>
+    <form id="chat-form">
+      <textarea id="user-message" placeholder="e.g. Recommend a movie like Interstellar..." required></textarea>
+      <button type="submit">💬 Ask AI</button>
+    </form>
+    <div class="chat-output" id="chat-response" style="display: none;"></div>
+    <div id="chat-clear-btn" style="text-align:right; display: none;">
+      <button class="clear-btn" onclick="clearChat()">🧹 Clear</button>
+    </div>
+  </div>
+<div style="text-align: center; margin-top: 40px;">
+  <a href="http://localhost/Movie%20Zone/home.php" class="back-btn">🏠 Back to Home</a>
+</div>
+
+  <script>
+    document.getElementById("chat-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const message = document.getElementById("user-message").value.trim();
+      if (!message) return;
+
+      const responseBox = document.getElementById("chat-response");
+      const clearBtn = document.getElementById("chat-clear-btn");
+
+      responseBox.style.display = "block";
+      clearBtn.style.display = "block";
+      responseBox.innerHTML = "⌛ Thinking...";
+
+      const res = await fetch("/chat_recommend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await res.json();
+      responseBox.innerHTML = data.reply || "❌ No response from AI.";
+    });
+
+    function clearChat() {
+      document.getElementById("chat-response").style.display = "none";
+      document.getElementById("chat-clear-btn").style.display = "none";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - Movie Zone</title>
+  <style>
+    :root {
+      --dark: #441012;
+      --light: #2e0c0e;
+      --primary: #CE851E;
+      --accent: #FFD700;
+      --text: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background-color: var(--dark);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--primary);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo img {
+      height: 55px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--primary);
+      padding: 8px 14px;
+      border: 1px solid var(--primary);
+      border-radius: 6px;
+      transition: 0.3s;
+      font-weight: bold;
+    }
+
+    .nav-links a:hover {
+      background-color: var(--primary);
+      color: var(--dark);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      height: 3px;
+      width: 25px;
+      background: var(--primary);
+      margin: 4px 0;
+      border-radius: 2px;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background-color: var(--light);
+      position: absolute;
+      top: 70px;
+      right: 20px;
+      width: 200px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      z-index: 99;
+    }
+
+    .mobile-menu a {
+      padding: 12px;
+      text-decoration: none;
+      color: var(--primary);
+      border-bottom: 1px solid var(--dark);
+    }
+
+    .mobile-menu a:hover {
+      background: var(--primary);
+      color: var(--dark);
+    }
+
+    /* Contact Form */
+    .main-content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 20px;
+    }
+
+    .contact-section {
+      max-width: 600px;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .contact-section h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 25px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--primary);
+      background: var(--dark);
+      color: white;
+      font-size: 1rem;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #bbb;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      background: var(--primary);
+      color: var(--dark);
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: var(--accent);
+    }
+
+    footer {
+      background-color: var(--dark);
+      text-align: center;
+      padding: 15px;
+      color: var(--primary);
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .contact-section {
+        padding: 20px;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="assets/Screenshot_2024-12-30_180101-removebg-preview.png" alt="Movie Zone Logo" />
+    </div>
+    <div class="nav-links">
+      <a href="home.php">Home</a>
+      <a href="movies.php">Movies</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="profile.php">Profile</a>
+      <a href="logout.php">Logout</a>
+    </div>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="home.php">Home</a>
+      <a href="movies.php">Movies</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="profile.php">Profile</a>
+      <a href="logout.php">Logout</a>
+    </div>
+  </header>
+
+  <!-- Contact Form Section -->
+  <div class="main-content">
+    <section class="contact-section">
+      <h1>Contact Us</h1>
+      <form action="process_contact.php" method="POST">
+        <input type="text" name="name" placeholder="Your Full Name" required>
+        <input type="email" name="email" placeholder="Your Email Address" required>
+        <textarea name="message" placeholder="Write your message..." required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    © 2024 Movie Zone | All Rights Reserved
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    hamburger.addEventListener("click", () => {
+      mobileMenu.style.display = mobileMenu.style.display === "flex" ? "none" : "flex";
+    });
+  </script>
+
+</body>
+</html>
